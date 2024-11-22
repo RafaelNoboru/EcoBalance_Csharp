@@ -129,13 +129,11 @@ namespace EcoBalance.Controllers
             if (empresa == null)
                 return NotFound();
 
-            if (_context.Empresas.Any(e => e.Email == empresaDto.Email && e.Id != id))
-                return BadRequest("O email já está em uso por outra empresa.");
-
-            empresa.Nome = empresaDto.Nome;
-            empresa.Email = empresaDto.Email;
-            empresa.Telefone = empresaDto.Telefone;
-            empresa.Cnpj = empresaDto.Cnpj;
+            // Atualiza os campos apenas se houver mudança
+            empresa.Nome = empresaDto.Nome ?? empresa.Nome;
+            empresa.Email = empresaDto.Email ?? empresa.Email;
+            empresa.Telefone = empresaDto.Telefone ?? empresa.Telefone;
+            empresa.Cnpj = empresaDto.Cnpj ?? empresa.Cnpj;
 
             if (!string.IsNullOrEmpty(empresaDto.Senha))
             {
